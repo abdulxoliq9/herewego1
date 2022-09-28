@@ -19,7 +19,9 @@ class _SignInState extends State<SignIn> {
   var passwordController = TextEditingController();
 
   doSignIn(){
-    isloading = true;
+    setState(() {
+      isloading = true;
+    });
   String email = emailController.text.toString().trim();
   String password = passwordController.text.toString().trim();
   if(email.isEmpty ||password.isEmpty)return;
@@ -30,7 +32,9 @@ class _SignInState extends State<SignIn> {
   }
 
   getFire(User fireUser)async{
-    isloading = false;
+    setState(() {
+      isloading = false;
+    });
     if(fireUser != null){
       await Prefs.saveUserId(fireUser.uid);
       Navigator.pushReplacementNamed(context, HomePage.id);
@@ -48,6 +52,7 @@ class _SignInState extends State<SignIn> {
             child: Container(
               padding: EdgeInsets.all(25),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextField(
                     controller: emailController,
@@ -57,6 +62,7 @@ class _SignInState extends State<SignIn> {
                   ),
                   SizedBox(height: 5,),
                   TextField(
+                    obscureText: true,
                     controller: passwordController,
                     decoration: InputDecoration(
                         hintText: 'Password'
@@ -64,7 +70,7 @@ class _SignInState extends State<SignIn> {
                   ),
                   SizedBox(height: 20,),
                   Container(
-                    height: 30,
+                    height: 40,
                     width: double.infinity,
                     child: FlatButton(
                       onPressed: (){

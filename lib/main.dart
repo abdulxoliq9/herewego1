@@ -1,11 +1,33 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:herewego1/pages/detail_page.dart';
 import 'package:herewego1/pages/home_page.dart';
 import 'package:herewego1/pages/signIn_page.dart';
 import 'package:herewego1/pages/signUp_page.dart';
+import 'package:herewego1/services/preferens.dart';
 
-void main() {
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp().then((value) => print('fireBase'));
   runApp(const MyApp());
 }
+
+Widget startPage(){
+  return StreamBuilder<User?>(
+    stream: FirebaseAuth.instance.authStateChanges(),
+    builder: (BuildContext context, snapshot){
+      if(snapshot.hasData){
+        Prefs.saveUserId(snapshot.data!.uid);
+        return HomePage();
+      }else{
+    Prefs.removeUserId();
+    return const SignIn();
+      }
+  }
+  );
+}
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -19,11 +41,12 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: startPage(),
       routes: {
         HomePage.id: (context) => HomePage(),
         SignIn.id: (context) => SignIn(),
         SignUp.id: (context) => SignUp(),
+        DetailPage.id: (context) => DetailPage()
       },
     );
   }

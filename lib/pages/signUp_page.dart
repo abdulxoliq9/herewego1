@@ -22,7 +22,6 @@ class _SignUpState extends State<SignUp> {
     var name = nameController.text.toString().trim();
     var email = emailController.text.toString().trim();
     var password = passwordController.text.toString().trim();
-
     setState(() {
       isloading = true;
     });
@@ -53,6 +52,7 @@ class _SignUpState extends State<SignUp> {
             child: Container(
               padding: EdgeInsets.all(25),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextField(
                     controller: nameController,
@@ -69,6 +69,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   SizedBox(height: 5,),
                   TextField(
+                    obscureText: true,
                     controller: passwordController,
                     decoration: InputDecoration(
                         hintText: 'Password'
@@ -76,14 +77,14 @@ class _SignUpState extends State<SignUp> {
                   ),
                   SizedBox(height: 20,),
                   Container(
-                    height: 30,
+                    height: 40,
                     width: double.infinity,
                     child: FlatButton(
                       onPressed: (){
                         doSignUp();
                       },
                       color: Colors.red,
-                      child: Text('SignIn',style: TextStyle(
+                      child: Text('Sign Up',style: TextStyle(
                           color: Colors.white
                       ),),
                     ),
@@ -91,7 +92,7 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(height: 10,),
                   Container(
                     alignment: Alignment.centerRight,
-                    height: 30,
+                    height: 40,
                     width: double.infinity,
                     child: FlatButton(
                       onPressed: (){
